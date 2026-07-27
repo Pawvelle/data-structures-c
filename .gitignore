@@ -1,8 +1,50 @@
-# Build artifacts
-build/
+# Dependencies and object files
+*.d
 *.o
-*.out
+*.ko
+*.obj
+*.elf
+
+# Build and linker output
+build/
 a.out
+*.out
+*.ilk
+*.map
+*.exp
+*.exe
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Headers and libraries
+*.gch
+*.pch
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Debug and kernel build files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+*.dwo
 
 # macOS and editor-local files
 .DS_Store
