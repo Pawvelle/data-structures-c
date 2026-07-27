@@ -1,0 +1,9 @@
+# Build artifacts
+build/
+*.o
+*.out
+a.out
+
+# macOS and editor-local files
+.DS_Store
+.vscode/

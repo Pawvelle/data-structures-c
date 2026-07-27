@@ -1,0 +1,105 @@
+#include "SeqList.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+SeqList *
+initList() {
+    SeqList *L = (SeqList *)malloc(sizeof(SeqList));
+
+    if (L == NULL) {
+        printf("内存分配失败\n");
+        return NULL;
+    }
+
+    L->data = (ElemType *)malloc(sizeof(ElemType) * MAXSIZE);
+
+    if (L->data == NULL) {
+        printf("内存分配失败\n");
+        free(L);
+        return NULL;
+    }
+
+    L->length = 0;
+
+    return L;
+}
+
+int
+appendElem(SeqList *L, ElemType e) {
+    if (L->length >= MAXSIZE) {
+        printf("顺序表已满\n");
+        return 0;
+    } else {
+        L->data[L->length] = e;
+        L->length++;
+        return 1;
+    }
+}
+
+void
+listElem(SeqList *L) {
+    for (int i = 0; i < L->length; i++) {
+        printf("%d ", L->data[i]);
+    }
+    printf("\n");
+}
+
+int
+insertElem(SeqList *L, int pos, ElemType e) {
+    if (pos < 1 || pos > L->length + 1) {
+        printf("插入位置错误\n");
+        return 0;
+    }
+
+    if (L->length >= MAXSIZE) {
+        printf("顺序表已满\n");
+        return 0;
+    }
+
+    for (int i = L->length - 1; i >= pos - 1; i--) {
+        L->data[i + 1] = L->data[i];
+    }
+
+    L->data[pos - 1] = e;
+    L->length++;
+
+    return 1;
+}
+
+int
+deleteElem(SeqList *L, int pos, ElemType *e) {
+    if (pos < 1 || pos > L->length) {
+        printf("删除位置错误\n");
+        return 0;
+    }
+
+    *e = L->data[pos - 1];
+
+    for (int i = pos; i < L->length; i++) {
+        L->data[i - 1] = L->data[i];
+    }
+
+    L->length--;
+
+    return 1;
+}
+
+int
+findElem(SeqList *L, ElemType e) {
+    for (int i = 0; i < L->length; i++) {
+        if (L->data[i] == e)
+            return i + 1;
+    }
+
+    return 0;
+}
+
+void
+destroyList(SeqList *L) {
+    if (L == NULL) {
+        return;
+    }
+
+    free(L->data);
+    free(L);
+}
