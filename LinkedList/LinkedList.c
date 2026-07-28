@@ -29,7 +29,7 @@ insertHead(Node *L, ElemType e) {
 
 Node *
 get_tail(Node *L) {
-    Node *p = L->next;
+    Node *p = L;
 
     while (p->next != NULL) {
         p = p->next;
