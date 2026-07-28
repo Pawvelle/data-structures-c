@@ -116,6 +116,25 @@ freeList(Node *L) {
     L->next = NULL;
 }
 
+Node *
+reverseList(Node *head) {
+    Node *first = NULL;
+    Node *second = head->next;
+    Node *third;
+
+    while (second != NULL) {
+        third = second->next;
+        second->next = first;
+        first = second;
+        second = third;
+    }
+
+    Node *hd = initList();
+    hd->next = first;
+
+    return hd;
+}
+
 void
 listNode(Node *L) {
     Node *p = L->next;
