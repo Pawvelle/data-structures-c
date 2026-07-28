@@ -20,9 +20,8 @@ initList() {
 int
 insertHead(Node *L, ElemType e) {
     Node *p = (Node *)malloc(sizeof(Node));
-    if (p == NULL) {
+    if (p == NULL)
         return 0;
-    }
 
     p->data = e;
     p->next = L->next;
@@ -46,6 +45,7 @@ insertTail(Node *tail, ElemType e) {
     p->data = e;
     p->next = NULL;
     tail->next = p;
+
     return p;
 }
 
