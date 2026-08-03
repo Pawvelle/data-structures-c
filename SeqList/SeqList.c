@@ -4,14 +4,14 @@
 
 SeqList *
 initList() {
-    SeqList *L = (SeqList *)malloc(sizeof(SeqList));
+    SeqList *L = (SeqList *) malloc(sizeof(SeqList));
 
     if (L == NULL) {
         printf("内存分配失败\n");
         return NULL;
     }
 
-    L->data = (ElemType *)malloc(sizeof(ElemType) * MAXSIZE);
+    L->data = (ElemType *) malloc(sizeof(ElemType) * MAXSIZE);
 
     if (L->data == NULL) {
         printf("内存分配失败\n");
