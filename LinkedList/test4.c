@@ -64,10 +64,9 @@ reverseList(Node *head) {
         second = third;
     }
 
-    Node *hd = initList();
-    hd->next = first;
+    head->next = first;
 
-    return hd;
+    return head;
 }
 
 int
