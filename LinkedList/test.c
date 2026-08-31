@@ -9,135 +9,37 @@ typedef struct Node {
 } Node;
 
 Node *
-initList() {
-    Node *head = (Node *)malloc(sizeof(Node));
+initNode() {
+    Node *head = malloc(sizeof(Node));
     head->data = 0;
     head->next = NULL;
 
     return head;
 }
 
-int
-insertHead(Node *L, ElemType e) {
-    Node *p = (Node *)malloc(sizeof(Node));
-    if (p == NULL)
-        return 0;
-
-    p->data = e;
-    p->next = L->next;
-    L->next = p;
-
-    return 1;
-}
-
 Node *
-get_tail(Node *L) {
-    Node *p = L->next;
-    while (p->next != NULL)
+get_tail(Node *head) {
+    Node *p = head;
+    while (p->next != NULL) {
         p = p->next;
+    }
 
     return p;
 }
 
 Node *
 insertTail(Node *tail, ElemType e) {
-    Node *p = (Node *)malloc(sizeof(Node));
+    Node *p = malloc(sizeof(Node));
+    tail->next = p;
     p->data = e;
     p->next = NULL;
-    tail->next = p;
 
     return p;
 }
 
-int
-insertNode(Node *L, int pos, ElemType e) {
-    Node *p = L;
-    for (int i = 0; i < pos - 1; i++) {
-        if (p->next == NULL)
-            return 0;
-        p = p->next;
-    }
-
-    Node *q = (Node *)malloc(sizeof(Node));
-    if (q == NULL) {
-        return 0;
-    }
-
-    q->data = e;
-    q->next = p->next;
-    p->next = q;
-
-    return 1;
-}
-
-int
-deleteNode(Node *L, int pos) {
-    Node *p = L;
-    for (int i = 0; i < pos - 1; i++) {
-        if (p->next == NULL)
-            return 0;
-        p = p->next;
-    }
-
-    if (p->next == NULL)
-        return 0;
-
-    Node *q = p->next;
-    p->next = q->next;
-    free(q);
-
-    return 1;
-}
-
-int
-listLength(Node *L) {
-    Node *p = L;
-    int len = 0;
-
-    while (p != NULL) {
-        p = p->next;
-        len++;
-    }
-
-    return len;
-}
-
 void
-freeList(Node *L) {
-    Node *p = L->next;
-    Node *q;
-
-    while (p != NULL) {
-        q = p->next;
-        free(p);
-        p = q;
-    }
-
-    L->next = NULL;
-}
-
-Node *
-reverseList(Node *head) {
-    Node *first = NULL;
-    Node *second = head->next;
-    Node *third;
-
-    while (second != NULL) {
-        third = second->next;
-        second->next = first;
-        first = second;
-        second = third;
-    }
-
-    Node *hd = initList();
-    hd->next = first;
-
-    return hd;
-}
-
-void
-listNode(Node *L) {
-    Node *p = L->next;
+listNode(Node *head) {
+    Node *p = head->next;
     while (p != NULL) {
         printf("%d ", p->data);
         p = p->next;
@@ -146,20 +48,63 @@ listNode(Node *L) {
 }
 
 int
+isCircle(Node *head) {
+    Node *slow = head->next;
+    Node *fast = head->next->next;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+            return 1;
+    }
+
+    return 0;
+}
+
+Node *
+findBegin(Node *head) {
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast) {
+            slow = head;
+            while (slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+
+            return slow;
+        }
+    }
+
+    return NULL;
+}
+
+int
 main(void) {
-    Node *list = initList();
-    insertHead(list, 10);
-    insertHead(list, 20);
-    insertHead(list, 30);
+    Node *head = initNode();
+    Node *p = get_tail(head);
+    p = insertTail(p, 1);
+    p = insertTail(p, 2);
+    p = insertTail(p, 3);
+    Node *q = p;
+    p = insertTail(p, 4);
+    p = insertTail(p, 5);
+    p = insertTail(p, 6);
+    p->next = q;
 
-    Node *tail = get_tail(list);
-    tail = insertTail(tail, 10);
-    tail = insertTail(tail, 20);
-    tail = insertTail(tail, 30);
-
-    insertNode(list, 2, 15);
-
-    listNode(list);
+    if (isCircle(head)) {
+        printf("有环\n");
+        printf("%d\n", findBegin(head)->data);
+    } else {
+        printf("无环");
+    }
 
     return 0;
 }
