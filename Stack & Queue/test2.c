@@ -31,7 +31,7 @@ isEmpty(Stack *s) {
 
 int
 push(Stack *s, ElemType e) {
-    if (s->top >= MAXSIZE) {
+    if (s->top >= MAXSIZE - 1) {
         printf("满了\n");
         return 0;
     }
